@@ -10,7 +10,6 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
 
-
 class IsOwner(BasePermission):
     """
     Allows access only to authenticated users.
@@ -36,6 +35,7 @@ class IsOwnerOrReadOnly(BasePermission):
         else:
             return False
 
+
 def get_user(key):
     model = Token
     key = key.split()
@@ -55,6 +55,7 @@ def get_user(key):
         return AnonymousUser()
 
     return token.user
+
 
 def evp_bytes_to_key(password, salt, key_len, iv_len):
     """
@@ -106,7 +107,9 @@ def decrypt_text(encrypted_base64, password):
     json_string = decrypted_data.decode('utf-8')
     return json_string
 
+
 from django.utils import timezone
+
 
 class HasAPIKeyWithTimeCheck(HasAPIKey):
     def get_api_key(self, request):
@@ -159,6 +162,7 @@ class HasAPIKeyWithTimeCheck(HasAPIKey):
         if abs(time_diff) > 15:
             return False
         return True
+
 
 def QueryAuthMiddleware(scope):
     # Look up user from query string (you should also do things like
