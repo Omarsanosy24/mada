@@ -1,24 +1,30 @@
-# setup server 
-
-# 1 : start docker kernal + python
+# 1: Start with the official Python image
 FROM python:3.12
-# 2 : ENV : show logs
+
+# 2: Set environment variables to show logs immediately
 ENV PYTHONUNBUFFERED=1
 
-# 3 : update kernal + install dep
-RUN apt-get update && apt-get -y install gcc libpq-dev
-RUN apt-get install -y zstd
-# 4: create project folder : kernal
+# 3: Update the system and install dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \                # Compiler for building some Python packages
+    libpq-dev \          # PostgreSQL development libraries
+    zstd                 # Zstandard compression tool (if needed)
+
+# 4: Create a working directory for the project
 WORKDIR /app
 
-# 5: uptate requi
-RUN pip freeze > requirements.txt
-
-# 6: Copy requi
+# 5: Copy requirements.txt into the container
 COPY requirements.txt /app/requirements.txt
 
-# 7: install req
-RUN pip install -r /app/requirements.txt
+# 6: Install Python dependencies
+RUN pip install --upgrade pip && \
+    pip install -r /app/requirements.txt
 
-# 8: copy project code --> docker
+# 7: Copy the rest of the project code into the container
 COPY . /app/
+
+# 8: Expose the port your app runs on (if applicable)
+EXPOSE 8000
+
+# 9: Define the command to run your application
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
