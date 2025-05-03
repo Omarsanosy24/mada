@@ -186,7 +186,7 @@ STORAGES = {
             "BACKEND": "storages.backends.s3.S3Storage",
         },
         "staticfiles": {
-            "BACKEND": "storages.backends.s3.S3Storage",
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
         },
     }
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
