@@ -1,14 +1,13 @@
 # setup server 
 
 # 1 : start docker kernal + python
-FROM python:3.11-slim-bullseye
-
+FROM python:3.12
 # 2 : ENV : show logs
 ENV PYTHONUNBUFFERED=1
 
 # 3 : update kernal + install dep
 RUN apt-get update && apt-get -y install gcc libpq-dev
-
+RUN apt-get install -y zstd
 # 4: create project folder : kernal
 WORKDIR /app
 
