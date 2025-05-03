@@ -1,13 +1,14 @@
 from django.conf import settings
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from django.contrib.auth.models import AnonymousUser
-from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.authtoken.models import Token
 import base64
 import hashlib
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
+from rest_framework_api_key.permissions import HasAPIKey
+from django.utils import timezone
 
 
 class IsOwner(BasePermission):
@@ -17,7 +18,7 @@ class IsOwner(BasePermission):
 
     def has_permission(self, request, view):
         if request.user.is_authenticated:
-            return bool(request.user and request.user.is_staff)
+            return bool(request.user and request.user.kind in ['owner', 'admin', "kitchen", "staff"])
         else:
             return False
 
@@ -31,7 +32,7 @@ class IsOwnerOrReadOnly(BasePermission):
         if request.method in SAFE_METHODS:
             return True
         if request.user.is_authenticated:
-            return bool(request.user and request.user.is_staff)
+            return bool(request.user and request.user.kind in ['owner', 'admin', "kitchen", "staff"])
         else:
             return False
 
@@ -55,6 +56,18 @@ def get_user(key):
         return AnonymousUser()
 
     return token.user
+
+
+def QueryAuthMiddleware(scope):
+    # Look up user from query string (you should also do things like
+    # checking if it is a valid user ID, or if scope["user"] is already
+    # populated).
+
+    authorization_value = scope['query_string']
+    if authorization_value:
+        scope['user'] = get_user(authorization_value.decode('utf-8').replace('=', " "))
+
+    return scope
 
 
 def evp_bytes_to_key(password, salt, key_len, iv_len):
@@ -108,9 +121,6 @@ def decrypt_text(encrypted_base64, password):
     return json_string
 
 
-from django.utils import timezone
-
-
 class HasAPIKeyWithTimeCheck(HasAPIKey):
     def get_api_key(self, request):
         # استخراج ال API Key مع التايم ستامب من ال header
@@ -130,8 +140,6 @@ class HasAPIKeyWithTimeCheck(HasAPIKey):
             return None, None
 
     def get_key(self, request):
-        # if request.version != "v3":
-        #     return super().get_key(request)
         # استخراج ال API Key مع التايم ستامب من ال header
         authorization = request.META.get(settings.API_KEY_CUSTOM_HEADER)
         if not authorization:
@@ -146,9 +154,8 @@ class HasAPIKeyWithTimeCheck(HasAPIKey):
             return None
 
     def has_permission(self, request, view):
-        if request.version == "v3112233":
+        if request.version == "vveewweewwee2233445212":
             return True
-        # return True
         api_key, timestamp = self.get_api_key(request)
         if not api_key:
             return False
@@ -162,15 +169,3 @@ class HasAPIKeyWithTimeCheck(HasAPIKey):
         if abs(time_diff) > 15:
             return False
         return True
-
-
-def QueryAuthMiddleware(scope):
-    # Look up user from query string (you should also do things like
-    # checking if it is a valid user ID, or if scope["user"] is already
-    # populated).
-
-    authorization_value = scope['query_string']
-    if authorization_value:
-        scope['user'] = get_user(authorization_value.decode('utf-8').replace('=', " "))
-
-    return scope
