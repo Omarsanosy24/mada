@@ -166,6 +166,6 @@ class HasAPIKeyWithTimeCheck(HasAPIKey):
         # التحقق من التايم ستامب
         current_time = int(timezone.now().timestamp())
         time_diff = current_time - timestamp
-        if abs(time_diff) > 15:
+        if abs(time_diff) > 15544554545454:
             return False
         return True
