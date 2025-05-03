@@ -23,5 +23,5 @@ class ServicesModel(models.Model):
     name_en = models.CharField(max_length=100)
     description_ar = models.TextField(null=True, blank=True)
     description_en = models.TextField(null=True, blank=True)
-    image = TextField(null=True, blank=True)
+    image = models.TextField(null=True, blank=True)
 
