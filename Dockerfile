@@ -1,29 +1,28 @@
-# 1: Start with the official Python image
-FROM python:3.12
+# 1: Start from official Python 3.12 image
+FROM python:3.12-slim
 
-# 2: Set environment variables to show logs immediately
+# 2: Show logs immediately
 ENV PYTHONUNBUFFERED=1
 
-# 3: Update the system and install dependencies
+# 3: Install required system packages
 RUN apt-get update && apt-get install -y \
     gcc \
-    zstd
+    libpq-dev \
+    zstd \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# 4: Create a working directory for the project
+# 4: Set working directory
 WORKDIR /app
 
-# 5: Copy requirements.txt into the container
-COPY requirements.txt /app/requirements.txt
+# 5: Copy requirements file first (for layer caching)
+COPY requirements.txt .
 
 # 6: Install Python dependencies
-RUN pip install --upgrade pip && \
-    pip install -r /app/requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# 7: Copy the rest of the project code into the container
-COPY . /app/
+# 7: Copy the rest of the project
+COPY . .
 
-# 8: Expose the port your app runs on (if applicable)
-EXPOSE 8000
-
-# 9: Define the command to run your application
+# 8: Set default command (اختياري)
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
