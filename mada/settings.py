@@ -59,7 +59,8 @@ CORS_ALLOW_METHODS = [
     "*"
 ]
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.fixxxo.com"
+    "https://*.fixxxo.com",
+    "http://localhost:3000"
 ]
 CORS_ALLOW_HEADERS = [
     'accept-language',
