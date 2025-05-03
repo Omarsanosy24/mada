@@ -8,7 +8,7 @@ from main_.permissions import HasAPIKeyWithTimeCheck
 
 class LoginAPIView(generics.GenericAPIView):
     serializer_class = LoginSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
     # permission_classes = [HasAPIKey]
 
