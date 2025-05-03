@@ -1,9 +1,10 @@
 from rest_framework import serializers
-from .models import ServicesModel, StaticData
+from .models import ServicesModel, StaticData, H_Vac_CategoryModel
 from main_.serializers import make_serializer_class
 
 
 ServicesSer = make_serializer_class(ServicesModel)
+H_Vac_CategorySer = make_serializer_class(H_Vac_CategoryModel)
 
 
 class StaticDataSer(serializers.ModelSerializer):
@@ -23,5 +24,6 @@ class StaticDataSer(serializers.ModelSerializer):
         for service in services:
             ServicesModel.objects.create(static_data=static_data, **service)
         return static_data
+
 
 
