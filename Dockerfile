@@ -6,9 +6,8 @@ ENV PYTHONUNBUFFERED=1
 
 # 3: Update the system and install dependencies
 RUN apt-get update && apt-get install -y \
-    gcc \                # Compiler for building some Python packages
-    libpq-dev \          # PostgreSQL development libraries
-    zstd                 # Zstandard compression tool (if needed)
+    gcc \
+    zstd
 
 # 4: Create a working directory for the project
 WORKDIR /app
