@@ -200,7 +200,6 @@ AWS_S3_ENDPOINT_URL = f'https://{AWS_S3_ENDPOINT}'
 # AWS_DEFAULT_ACL = 'public-read'
 # SESSION_COOKIE_DOMAIN = '.timely.com.de'
 AWS_LOCATION = 'media/'
-AWS_QUERYSTRING_AUTH = False
 
 LOGGING = {
     'version': 1,
