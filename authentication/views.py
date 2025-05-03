@@ -1,8 +1,15 @@
+import boto3
+from botocore.config import Config
 from rest_framework import generics, status, permissions
+from rest_framework.views import APIView
+
 from authentication.serializers import LoginSerializer, LogoutSerializer, UserInfoSer, ChangePasswordSer
 
 from rest_framework.response import Response
 from django.utils.translation import gettext_lazy as _
+
+from mada.settings import AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_S3_REGION_NAME, AWS_S3_ENDPOINT_URL, \
+    AWS_STORAGE_BUCKET_NAME
 from main_.permissions import HasAPIKeyWithTimeCheck
 
 
@@ -89,3 +96,37 @@ class ChangePasswordView(generics.GenericAPIView):
             "status": False,
             "message": serializer.errors,
         })
+
+
+class GeneratePresignedUrl(APIView):
+    # permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        s3_client = boto3.client(
+            's3',
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            config=Config(region_name=AWS_S3_REGION_NAME),
+            endpoint_url=AWS_S3_ENDPOINT_URL
+        )
+
+        bucket_name = AWS_STORAGE_BUCKET_NAME
+        object_name = request.query_params.get('file_name')  # اسم الملف الذي سيتم رفعه
+        # file_type = request.query_params.get('file_type')  # اسم الملف الذي سيتم رفعه
+
+        try:
+            # توليد رابط موقّع
+            presigned_url = s3_client.generate_presigned_url(
+                'put_object',
+                Params={
+                    'Bucket': bucket_name,
+                    'Key': object_name,
+                    # "ContentType": "image/webp",
+                    # "conditions": [{"Content-Type": "image/webp"}]
+
+                },
+                ExpiresIn=3600  # صلاحية الرابط لمدة ساعة
+            )
+            return Response({"url": presigned_url}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
