@@ -60,55 +60,35 @@ class UserInfoSer(UserBetaSer):
 class LoginSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=68, min_length=6, write_only=True)
     token = serializers.CharField(max_length=2000, min_length=3, read_only=True)
-    email = serializers.EmailField(required=True)
+    email = serializers.EmailField(required=True, write_only=True)
+    data = serializers.JSONField(read_only=True)
 
     class Meta:
         model = User
         fields = [
-            "password",
-            "email",
-            "email",
-            "password", "first_name",
-            "token", "last_name", "id"
+            "email", "data",
+            "id", "password",
+            "token"
         ]
-        extra_kwargs = {
-            'password': {'write_only': True},
-            'first_name': {'read_only': True},
-            'last_name': {'read_only': True},
-
-        }
 
     def validate_email(self, attrs):
-        email = attrs
+        email = attrs.lower()
         if not User.objects.filter(email=email).exists():
             raise ValidationError(_("User does not exist."))
         return attrs
 
     def validate(self, attrs):
-        email = attrs.get("email", None)
+        email = attrs.get("email").lower()
         password = attrs.get("password", None)
         user = auth.authenticate(email=email, password=password)
         if not user:
-            raise serializers.ValidationError({"password": "incorrect password"})
-        if "staff" in self.context['request'].query_params:
-            if not user.is_staff:
-                raise serializers.ValidationError({
-                    'email': _('you did not have permission to login as staff')
-                })
-        # from django.utils import timezone
-        # bans_filter = user.bans.filter(start_at__lte=timezone.now(), end_at__gte=timezone.now())
-        # if bans_filter.exists():
-        #     raise serializers.ValidationError({
-        #         'email': _(f'your account is banned until {bans_filter.latest("id").end_at}')
-        #     })
-
-        # ip = get_ip_header(self.context['request'])
-
+            raise serializers.ValidationError({"password": _("incorrect password")})
         tt, token = Token.objects.get_or_create(user=user)
-        # tt, token = TokenWithEx.objects.get_or_create(user=user)
         data = UserInfoSer(instance=user, context=self.context).data
-        data["token"] = tt.key
-        return data
+        return {
+            "token": tt.key,
+            "data": data,
+        }
 
 
 class ResetPasswordEmailRequestSerializer(serializers.Serializer):
