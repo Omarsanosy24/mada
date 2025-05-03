@@ -181,12 +181,19 @@ LANGUAGES = [
     ('ar', _('Arabic')),
 
 ]
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+        },
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+        },
+    }
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = "fixxxo"
-AWS_S3_REGION_NAME = "us-east-005"
-AWS_S3_ENDPOINT = f's3.{AWS_S3_REGION_NAME}.backblazeb2.com'
+AWS_STORAGE_BUCKET_NAME = "mada"
+AWS_S3_REGION_NAME = "weur"
+AWS_S3_ENDPOINT = f'7202924bdd064574bd53d9131070ce85.r2.cloudflarestorage.com'
 AWS_S3_ENDPOINT_URL = f'https://{AWS_S3_ENDPOINT}'
 # AWS_DEFAULT_ACL = 'public-read'
 # SESSION_COOKIE_DOMAIN = '.timely.com.de'

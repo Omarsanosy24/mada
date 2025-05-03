@@ -1,0 +1,39 @@
+name: Deploy on commit
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+  SERVER_IP: ${{ secrets.SERVER_IP }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check commit message
+        run: |
+          if [[ $(git log --format=%B -n 1 ${{ github.sha }}) == *"deploy"* ]]; then
+            echo "Deploying changes..."
+          else
+            echo "No changes to deploy."
+            exit 1
+          fi
+
+      - name: SSH into server and restart services
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.SERVER_IP }}
+          username: ${{ env.SSH_USERNAME }}
+          key: ${{ env.SSH_PRIVATE_KEY }}
+          script: |
+            cd mada/mada && git pull && source ../myprojectenv/bin/activate && pip install -r requirements.txt && python manage.py makemigrations --noinput && python manage.py migrate
+            sudo systemctl restart gunicornMada
+
