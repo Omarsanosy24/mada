@@ -24,3 +24,28 @@ class CustomModelSerializer(ModelSerializer):
                 for f in field:
                     fields.pop(f)
         return fields
+
+
+def make_serializer_class(model_, *fields_):
+    if not fields_:
+        fields_ = "__all__"
+    else:
+        fields_ = ["id", *fields_]
+
+    class _Serializer(ModelSerializer):
+        class Meta:
+            model = model_
+            fields = fields_
+
+    _Serializer.__name__ = f"{model_.__name__}Serializer"
+    return _Serializer
+
+
+def make_info_serializer(model_, source, *fields_, many=False):
+    class _Serializer(ModelSerializer):
+        class Meta:
+            model = model_
+            fields = ["id", *fields_]
+
+    _Serializer.__name__ = f"{model_.__name__}InfoSerializer"
+    return _Serializer(read_only=True, source=source, many=many)
