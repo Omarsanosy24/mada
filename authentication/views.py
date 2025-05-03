@@ -1,15 +1,11 @@
 from django.template.loader import render_to_string
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, status, permissions
-from rest_framework.filters import OrderingFilter, SearchFilter
-from main_.viewset import ModelViewSetIndividual
-from authentication.models import User
 from authentication.serializers import LoginSerializer, LogoutSerializer, UserInfoSer, ChangePasswordSer
 
 from rest_framework.response import Response
 from django.utils.translation import gettext_lazy as _
 from dotenv import load_dotenv
-from . import Utils
 
 load_dotenv()
 

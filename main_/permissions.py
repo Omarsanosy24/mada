@@ -2,8 +2,7 @@ from django.conf import settings
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from django.contrib.auth.models import AnonymousUser
 from rest_framework_api_key.permissions import HasAPIKey
-
-from authentication.models import TokenWithEx
+from rest_framework.authtoken.models import Token
 import base64
 import hashlib
 from cryptography.hazmat.primitives import padding
@@ -38,7 +37,7 @@ class IsOwnerOrReadOnly(BasePermission):
             return False
 
 def get_user(key):
-    model = TokenWithEx
+    model = Token
     key = key.split()
     if not key or key[0].lower() != "token":
         return AnonymousUser()

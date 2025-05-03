@@ -8,7 +8,7 @@ from cryptography.hazmat.primitives import padding
 from django.utils.functional import Promise
 from rest_framework.renderers import JSONRenderer
 
-from fixxxo.settings import API_PASSWORD
+from django.conf import settings
 
 
 def evp_bytes_to_key(password, salt, key_len, iv_len):
@@ -79,7 +79,7 @@ class CustomJsonRender(JSONRenderer):
             try:
                 version = request.version if request else None
                 if version == "v2":
-                    encryption_password = API_PASSWORD
+                    encryption_password = settings.API_PASSWORD
 
                     # تحويل البيانات إلى نص JSON
                     # json_data = json.dumps(make_serializable(data))
