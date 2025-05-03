@@ -4,7 +4,6 @@ from itertools import chain
 
 from django.contrib.auth.hashers import make_password
 from django.db import models
-from django.db.models import Q, Case, When
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
@@ -13,7 +12,7 @@ from rest_framework.authtoken.models import Token
 import random
 import string
 from django.utils.translation import gettext_lazy as _
-from main_.models import custom_upload_to, Model
+from main_.models import Model
 
 
 class UserManager(BaseUserManager):
