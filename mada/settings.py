@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "rest_framework_api_key",
     'django_filters',
     'storages',
+    "structure"
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
