@@ -1,11 +1,12 @@
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
-from .views import StaticDataViewSet, BannersView, BlogsView
+from .views import StaticDataViewSet, BannersView, BlogsView, ProductView
 
 router = DefaultRouter()
 router.register("static-data", StaticDataViewSet)
 router.register("banners", BannersView)
 router.register("blogs", BlogsView)
+router.register("product", ProductView)
 
 app_name = "static_data"
 urlpatterns = [
