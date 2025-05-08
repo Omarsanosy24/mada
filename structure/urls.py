@@ -3,9 +3,9 @@ from django.urls import path, include
 from .views import StaticDataViewSet, BannersView, BlogsView
 
 router = DefaultRouter()
-router.register("static-data", StaticDataViewSet, basename="static-data")
-router.register("banners", BannersView, basename="static-data")
-router.register("blogs", BlogsView, basename="static-data")
+router.register("static-data", StaticDataViewSet)
+router.register("banners", BannersView)
+router.register("blogs", BlogsView)
 
 app_name = "static_data"
 urlpatterns = [

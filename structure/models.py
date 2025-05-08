@@ -32,6 +32,7 @@ class H_Vac_CategoryModel(models.Model):
     description_ar = models.TextField(null=True, blank=True)
     description_en = models.TextField(null=True, blank=True)
     info_en = models.TextField(null=True, blank=True)
+    images = models.TextField(null=True, blank=True)
 
 
 class BannersModel(models.Model):
@@ -40,8 +41,17 @@ class BannersModel(models.Model):
 
 
 class BlogsModel(models.Model):
+    kind = models.CharField(max_length=100, default="news")
     name_ar = models.CharField(max_length=100)
     name_en = models.CharField(max_length=100)
     description_ar = models.TextField(null=True, blank=True)
     description_en = models.TextField(null=True, blank=True)
     image = models.TextField(null=True, blank=True)
+
+
+class OurClientsModel(models.Model):
+    name_ar = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+    location_ar = models.CharField(max_length=100)
+    location_en = models.CharField(max_length=100)
+

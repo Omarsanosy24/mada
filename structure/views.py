@@ -4,8 +4,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 from main_.viewset import ModelViewSetIndividual
-from .models import StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel
-from .serializers import StaticDataSer, H_Vac_CategorySer, BannersSer, BlogsSer
+from .models import StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, OurClientsModel
+from .serializers import StaticDataSer, H_Vac_CategorySer, BannersSer, BlogsSer, OurClientsSer
 
 
 class StaticDataViewSet(ModelViewSetIndividual):
@@ -36,4 +36,11 @@ class BlogsView(ModelViewSetIndividual):
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = BlogsSer
     filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["kind"]
 
+
+class OurClientsView(ModelViewSetIndividual):
+    queryset = OurClientsModel.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    serializer_class = OurClientsSer
+    filter_backends = [DjangoFilterBackend]
