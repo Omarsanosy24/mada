@@ -32,3 +32,16 @@ class H_Vac_CategoryModel(models.Model):
     description_ar = models.TextField(null=True, blank=True)
     description_en = models.TextField(null=True, blank=True)
     info_en = models.TextField(null=True, blank=True)
+
+
+class BannersModel(models.Model):
+    url = models.URLField(null=True, blank=True)
+    image = models.TextField(null=True, blank=True)
+
+
+class BlogsModel(models.Model):
+    name_ar = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+    description_ar = models.TextField(null=True, blank=True)
+    description_en = models.TextField(null=True, blank=True)
+    image = models.TextField(null=True, blank=True)
