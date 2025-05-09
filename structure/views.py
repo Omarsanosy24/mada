@@ -4,8 +4,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 from main_.viewset import ModelViewSetIndividual
-from .models import StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, OurClientsModel, ProductModel
-from .serializers import StaticDataSer, H_Vac_CategorySer, BannersSer, BlogsSer, OurClientsSer, ProductSer
+from .models import StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, OurClientsModel, ProductModel, \
+    CapacityModel
+from .serializers import StaticDataSer, H_Vac_CategorySer, BannersSer, BlogsSer, OurClientsSer, ProductSer, \
+    CapacitySer
 
 
 class StaticDataViewSet(ModelViewSetIndividual):
@@ -50,4 +52,11 @@ class ProductView(ModelViewSetIndividual):
     queryset = ProductModel.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = ProductSer
+    filter_backends = [DjangoFilterBackend]
+
+
+class CapacityView(ModelViewSetIndividual):
+    queryset = CapacityModel.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    serializer_class = CapacitySer
     filter_backends = [DjangoFilterBackend]

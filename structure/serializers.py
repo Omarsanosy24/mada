@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import ServicesModel, StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, OurClientsModel, \
-    ProductModel
+    ProductModel, CapacityModel
 from main_.serializers import make_serializer_class
 
 
@@ -36,3 +36,5 @@ BlogsSer = make_serializer_class(BlogsModel)
 
 
 OurClientsSer = make_serializer_class(OurClientsModel)
+
+CapacitySer = make_serializer_class(CapacityModel)
