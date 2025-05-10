@@ -5,9 +5,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from main_.viewset import ModelViewSetIndividual
 from .models import StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, OurClientsModel, ProductModel, \
-    CapacityModel
+    CapacityModel, ProductGeneratorSet, CategoryGeneratorSet, FireProductsModel
 from .serializers import StaticDataSer, H_Vac_CategorySer, BannersSer, BlogsSer, OurClientsSer, ProductSer, \
-    CapacitySer
+    CapacitySer, ProductGeneratorSetSer, CategoryGeneratorSer, FireProductsSer
 
 
 class StaticDataViewSet(ModelViewSetIndividual):
@@ -59,4 +59,25 @@ class CapacityView(ModelViewSetIndividual):
     queryset = CapacityModel.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = CapacitySer
+    filter_backends = [DjangoFilterBackend]
+
+
+class CategoryGeneratorViewSet(ModelViewSetIndividual):
+    queryset = CategoryGeneratorSet.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    serializer_class = CategoryGeneratorSer
+    filter_backends = [DjangoFilterBackend]
+
+
+class ProductGeneratorSetViewSet(ModelViewSetIndividual):
+    queryset = ProductGeneratorSet.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    serializer_class = ProductGeneratorSetSer
+    filter_backends = [DjangoFilterBackend]
+
+
+class FireProductsViewSet(ModelViewSetIndividual):
+    queryset = FireProductsModel.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    serializer_class = FireProductsSer
     filter_backends = [DjangoFilterBackend]

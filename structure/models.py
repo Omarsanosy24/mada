@@ -77,3 +77,27 @@ class ProductModel(models.Model):
     specifications = models.TextField(null=True, blank=True)
 
 
+class CategoryGeneratorSet(models.Model):
+    name_ar = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+
+
+class ProductGeneratorSet(models.Model):
+    name_ar = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+    description_ar = models.TextField(null=True, blank=True)
+    description_en = models.TextField(null=True, blank=True)
+    image = models.TextField(null=True, blank=True)
+    category = models.ForeignKey(CategoryGeneratorSet, on_delete=models.CASCADE, related_name="products")
+    brand = models.ForeignKey(BrandsModel, on_delete=models.CASCADE, related_name="products")
+
+
+class FireProductsModel(models.Model):
+    name_ar = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+    description_ar = models.TextField(null=True, blank=True)
+    description_en = models.TextField(null=True, blank=True)
+    image = models.TextField(null=True, blank=True)
+
+
+
