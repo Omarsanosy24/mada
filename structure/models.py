@@ -82,6 +82,11 @@ class CategoryGeneratorSet(models.Model):
     name_en = models.CharField(max_length=100)
 
 
+class BrandGeneratorSetModel(models.Model):
+    name_ar = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+
+
 class ProductGeneratorSet(models.Model):
     name_ar = models.CharField(max_length=100)
     name_en = models.CharField(max_length=100)

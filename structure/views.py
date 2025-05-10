@@ -5,9 +5,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from main_.viewset import ModelViewSetIndividual
 from .models import StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, OurClientsModel, ProductModel, \
-    CapacityModel, ProductGeneratorSet, CategoryGeneratorSet, FireProductsModel
+    CapacityModel, ProductGeneratorSet, CategoryGeneratorSet, FireProductsModel, BrandsModel, BrandGeneratorSetModel
 from .serializers import StaticDataSer, H_Vac_CategorySer, BannersSer, BlogsSer, OurClientsSer, ProductSer, \
-    CapacitySer, ProductGeneratorSetSer, CategoryGeneratorSer, FireProductsSer
+    CapacitySer, ProductGeneratorSetSer, CategoryGeneratorSer, FireProductsSer, BrandsSer, BrandGeneratorSetSer
 
 
 class StaticDataViewSet(ModelViewSetIndividual):
@@ -80,4 +80,18 @@ class FireProductsViewSet(ModelViewSetIndividual):
     queryset = FireProductsModel.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = FireProductsSer
+    filter_backends = [DjangoFilterBackend]
+
+
+class BrandGeneratorSetViewSet(ModelViewSetIndividual):
+    queryset = BrandGeneratorSetModel.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    serializer_class = BrandGeneratorSetSer
+    filter_backends = [DjangoFilterBackend]
+
+
+class BrandsViewSet(ModelViewSetIndividual):
+    queryset = BrandsModel.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    serializer_class = BrandsSer
     filter_backends = [DjangoFilterBackend]

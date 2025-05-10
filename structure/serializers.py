@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import ServicesModel, StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, OurClientsModel, \
-    ProductModel, CapacityModel, CategoryGeneratorSet, ProductGeneratorSet, FireProductsModel
+    ProductModel, CapacityModel, CategoryGeneratorSet, ProductGeneratorSet, FireProductsModel, BrandGeneratorSetModel, \
+    BrandsModel
 from main_.serializers import make_serializer_class
 
 
@@ -30,9 +31,11 @@ class StaticDataSer(serializers.ModelSerializer):
 BannersSer = make_serializer_class(BannersModel)
 
 ProductSer = make_serializer_class(ProductModel)
+ProductMiniSer = make_serializer_class(ProductModel, "id", "name_ar", "name_en")
 
 
 BlogsSer = make_serializer_class(BlogsModel)
+BlogsMiniSer = make_serializer_class(BlogsModel, "id", "name_ar", "name_en")
 
 
 OurClientsSer = make_serializer_class(OurClientsModel)
@@ -44,4 +47,8 @@ CategoryGeneratorSer = make_serializer_class(CategoryGeneratorSet)
 ProductGeneratorSetSer = make_serializer_class(ProductGeneratorSet)
 
 FireProductsSer = make_serializer_class(FireProductsModel)
+
+BrandGeneratorSetSer = make_serializer_class(BrandGeneratorSetModel)
+
+BrandsSer = make_serializer_class(BrandsModel)
 
