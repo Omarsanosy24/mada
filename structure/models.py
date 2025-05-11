@@ -72,8 +72,10 @@ class ProductModel(models.Model):
     description_ar = models.TextField(null=True, blank=True)
     description_en = models.TextField(null=True, blank=True)
     image = models.TextField(null=True, blank=True)
-    brand = models.ForeignKey(BrandsModel, on_delete=models.CASCADE, related_name="products")
-    capacity = models.ForeignKey(CapacityModel, on_delete=models.CASCADE, related_name="products")
+    brand = models.ForeignKey(BrandsModel, on_delete=models.CASCADE,
+                              related_name="products", null=True, blank=True)
+    capacity = models.ForeignKey(CapacityModel, null=True, blank=True,
+                                 on_delete=models.CASCADE, related_name="products")
     specifications = models.TextField(null=True, blank=True)
 
 

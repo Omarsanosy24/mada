@@ -1,3 +1,5 @@
+import django_filters
+
 from main_.permissions import HasAPIKeyWithTimeCheck
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
@@ -48,11 +50,25 @@ class OurClientsView(ModelViewSetIndividual):
     filter_backends = [DjangoFilterBackend]
 
 
+class ProductFilter(django_filters.FilterSet):
+    brand = django_filters.ModelMultipleChoiceFilter(
+        field_name="brand",
+        queryset=BrandsModel.objects.all(),
+        to_field_name="id",
+    )
+    capacity = django_filters.ModelMultipleChoiceFilter(
+        field_name="capacity",
+        queryset=CapacityModel.objects.all(),
+        to_field_name="id",
+    )
+
+
 class ProductView(ModelViewSetIndividual):
     queryset = ProductModel.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = ProductSer
     filter_backends = [DjangoFilterBackend]
+    filterset_class = ProductFilter
 
 
 class CapacityView(ModelViewSetIndividual):
@@ -69,11 +85,25 @@ class CategoryGeneratorViewSet(ModelViewSetIndividual):
     filter_backends = [DjangoFilterBackend]
 
 
+class ProductGeneratorSetFilter(django_filters.FilterSet):
+    brand = django_filters.ModelMultipleChoiceFilter(
+        field_name="brand",
+        queryset=BrandsModel.objects.all(),
+        to_field_name="id",
+    )
+    category = django_filters.ModelMultipleChoiceFilter(
+        field_name="category",
+        queryset=CategoryGeneratorSet.objects.all(),
+        to_field_name="id",
+    )
+
+
 class ProductGeneratorSetViewSet(ModelViewSetIndividual):
     queryset = ProductGeneratorSet.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = ProductGeneratorSetSer
     filter_backends = [DjangoFilterBackend]
+    filterset_class = ProductGeneratorSetFilter
 
 
 class FireProductsViewSet(ModelViewSetIndividual):
