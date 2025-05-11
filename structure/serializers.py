@@ -28,13 +28,27 @@ class StaticDataSer(serializers.ModelSerializer):
 
 
 BannersSer = make_serializer_class(BannersModel)
-BrandsSer = make_serializer_class(BrandsModel)
-CapacitySer = make_serializer_class(CapacityModel)
+
+
+class BrandsSer(serializers.ModelSerializer):
+    count = serializers.IntegerField(read_only=True, source="product.count")
+
+    class Meta:
+        model = BrandsModel
+        fields = "__all__"
+
+
+class CapacitySer(serializers.ModelSerializer):
+    count = serializers.IntegerField(read_only=True, source="product.count")
+
+    class Meta:
+        model = CapacityModel
+        fields = "__all__"
 
 
 class ProductSer(serializers.ModelSerializer):
-    brand_info = BrandsSer(read_only=True)
-    capacity_info = CapacitySer(read_only=True)
+    brand_info = BrandsSer(read_only=True, source="brand")
+    capacity_info = CapacitySer(read_only=True, source="capacity")
 
     class Meta:
         model = ProductModel
@@ -48,13 +62,26 @@ BlogsMiniSer = make_serializer_class(BlogsModel, "id", "name_ar", "name_en")
 
 OurClientsSer = make_serializer_class(OurClientsModel)
 
-CategoryGeneratorSer = make_serializer_class(CategoryGeneratorSet)
-BrandGeneratorSetSer = make_serializer_class(BrandGeneratorSetModel)
+
+class CategoryGeneratorSer(serializers.ModelSerializer):
+    count = serializers.IntegerField(read_only=True, source="product.count")
+
+    class Meta:
+        model = CategoryGeneratorSet
+        fields = "__all__"
+
+
+class BrandGeneratorSetSer(serializers.ModelSerializer):
+    count = serializers.IntegerField(read_only=True, source="product.count")
+
+    class Meta:
+        model = BrandGeneratorSetModel
+        fields = "__all__"
 
 
 class ProductGeneratorSetSer(serializers.ModelSerializer):
-    category_info = CategoryGeneratorSer(read_only=True)
-    product_info = BrandGeneratorSetSer(read_only=True)
+    category_info = CategoryGeneratorSer(read_only=True, source="category")
+    brand_info = BrandGeneratorSetSer(read_only=True, source="brand")
 
     class Meta:
         model = ProductGeneratorSet
