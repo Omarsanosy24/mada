@@ -29,8 +29,19 @@ class StaticDataSer(serializers.ModelSerializer):
 
 
 BannersSer = make_serializer_class(BannersModel)
+BrandsSer = make_serializer_class(BrandsModel)
+CapacitySer = make_serializer_class(CapacityModel)
 
-ProductSer = make_serializer_class(ProductModel)
+
+class ProductSer(serializers.ModelSerializer):
+    brand_info = BrandsSer(read_only=True)
+    capacity_info = CapacitySer(read_only=True)
+
+    class Meta:
+        model = ProductModel
+        fields = "__all__"
+
+
 ProductMiniSer = make_serializer_class(ProductModel, "id", "name_ar", "name_en")
 
 
@@ -40,7 +51,6 @@ BlogsMiniSer = make_serializer_class(BlogsModel, "id", "name_ar", "name_en")
 
 OurClientsSer = make_serializer_class(OurClientsModel)
 
-CapacitySer = make_serializer_class(CapacityModel)
 
 CategoryGeneratorSer = make_serializer_class(CategoryGeneratorSet)
 
@@ -50,5 +60,4 @@ FireProductsSer = make_serializer_class(FireProductsModel)
 
 BrandGeneratorSetSer = make_serializer_class(BrandGeneratorSetModel)
 
-BrandsSer = make_serializer_class(BrandsModel)
 
