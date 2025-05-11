@@ -31,7 +31,7 @@ BannersSer = make_serializer_class(BannersModel)
 
 
 class BrandsSer(serializers.ModelSerializer):
-    count = serializers.IntegerField(read_only=True, source="product.count")
+    count = serializers.IntegerField(read_only=True, source="products.count")
 
     class Meta:
         model = BrandsModel
@@ -39,7 +39,7 @@ class BrandsSer(serializers.ModelSerializer):
 
 
 class CapacitySer(serializers.ModelSerializer):
-    count = serializers.IntegerField(read_only=True, source="product.count")
+    count = serializers.IntegerField(read_only=True, source="products.count")
 
     class Meta:
         model = CapacityModel
@@ -64,7 +64,7 @@ OurClientsSer = make_serializer_class(OurClientsModel)
 
 
 class CategoryGeneratorSer(serializers.ModelSerializer):
-    count = serializers.IntegerField(read_only=True, source="product.count")
+    count = serializers.IntegerField(read_only=True, source="products.count")
 
     class Meta:
         model = CategoryGeneratorSet
@@ -72,7 +72,7 @@ class CategoryGeneratorSer(serializers.ModelSerializer):
 
 
 class BrandGeneratorSetSer(serializers.ModelSerializer):
-    count = serializers.IntegerField(read_only=True, source="product.count")
+    count = serializers.IntegerField(read_only=True, source="products.count")
 
     class Meta:
         model = BrandGeneratorSetModel
