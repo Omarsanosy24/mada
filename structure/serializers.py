@@ -4,7 +4,6 @@ from .models import ServicesModel, StaticData, H_Vac_CategoryModel, BannersModel
     BrandsModel
 from main_.serializers import make_serializer_class
 
-
 ServicesSer = make_serializer_class(ServicesModel)
 H_Vac_CategorySer = make_serializer_class(H_Vac_CategoryModel)
 
@@ -34,30 +33,29 @@ CapacitySer = make_serializer_class(CapacityModel)
 
 
 class ProductSer(serializers.ModelSerializer):
-    brand_info = BrandsSer(read_only=True)
-    capacity_info = CapacitySer(read_only=True)
-
     class Meta:
         model = ProductModel
         fields = "__all__"
+        depth = 1
 
 
 ProductMiniSer = make_serializer_class(ProductModel, "id", "name_ar", "name_en")
 
-
 BlogsSer = make_serializer_class(BlogsModel)
 BlogsMiniSer = make_serializer_class(BlogsModel, "id", "name_ar", "name_en")
 
-
 OurClientsSer = make_serializer_class(OurClientsModel)
-
 
 CategoryGeneratorSer = make_serializer_class(CategoryGeneratorSet)
 
-ProductGeneratorSetSer = make_serializer_class(ProductGeneratorSet)
+
+class ProductGeneratorSetSer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductGeneratorSet
+        fields = "__all__"
+        depth = 1
+
 
 FireProductsSer = make_serializer_class(FireProductsModel)
 
 BrandGeneratorSetSer = make_serializer_class(BrandGeneratorSetModel)
-
-
