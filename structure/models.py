@@ -93,8 +93,10 @@ class ProductGeneratorSet(models.Model):
     description_ar = models.TextField(null=True, blank=True)
     description_en = models.TextField(null=True, blank=True)
     image = models.TextField(null=True, blank=True)
-    category = models.ForeignKey(CategoryGeneratorSet, on_delete=models.CASCADE, related_name="products")
-    brand = models.ForeignKey(BrandGeneratorSetModel, on_delete=models.CASCADE, related_name="products")
+    category = models.ForeignKey(CategoryGeneratorSet,
+                                 on_delete=models.CASCADE, related_name="products", null=True, blank=True)
+    brand = models.ForeignKey(BrandGeneratorSetModel,
+                              on_delete=models.CASCADE, related_name="products", null=True, blank=True)
 
 
 class FireProductsModel(models.Model):
