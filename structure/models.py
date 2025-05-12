@@ -110,8 +110,21 @@ class FireProductsModel(models.Model):
     image = models.TextField(null=True, blank=True)
 
 
+class ContactKindModel(models.Model):
+    choices = [
+        ("generator_sets", "generator_sets"),
+        ("contact", "contact"),
+        ("generator_spare_parts", "generator_spare_parts"),
+        ("fire_systems", "fire_systems"),
+        ("h_vac", "h_vac"),
+    ]
+    kind = models.CharField(max_length=100, unique=True, choices=choices)
+    phone = models.CharField(max_length=11)
+
+
 class ContactUsModel(models.Model):
-    kind = models.CharField(max_length=100, default="contact")
+    kind = models.ForeignKey(ContactKindModel, on_delete=models.CASCADE,
+                             related_name="contact_us")
     product = models.ForeignKey(ProductModel, on_delete=models.CASCADE, related_name="contact_us", null=True,
                                 blank=True)
     product_generator_set = models.ForeignKey(ProductGeneratorSet,
