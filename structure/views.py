@@ -1,4 +1,5 @@
 import django_filters
+from django_filters import OrderingFilter
 
 from main_.permissions import HasAPIKeyWithTimeCheck
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -32,7 +33,8 @@ class BannersView(ModelViewSetIndividual):
     queryset = BannersModel.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = BannersSer
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    ordering_fields = ["id"]
 
 
 class BlogsView(ModelViewSetIndividual):
