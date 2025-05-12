@@ -2,7 +2,7 @@ from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from .views import StaticDataViewSet, BannersView, BlogsView, ProductView, H_Vac_CategoryViewSet, OurClientsView, \
     CapacityView, ProductGeneratorSetViewSet, CategoryGeneratorViewSet, FireProductsViewSet, BrandsViewSet, \
-    BrandGeneratorSetViewSet, ContentUsModelViewSet
+    BrandGeneratorSetViewSet, ContactUsModelViewSet
 
 router = DefaultRouter()
 router.register("static-data", StaticDataViewSet)
@@ -17,7 +17,7 @@ router.register("category-generator-set", CategoryGeneratorViewSet)
 router.register("fire-products", FireProductsViewSet)
 router.register("brands", BrandsViewSet)
 router.register("brand-generator-set", BrandGeneratorSetViewSet)
-router.register("contact-us", ContentUsModelViewSet)
+router.register("contact-us", ContactUsModelViewSet)
 
 
 app_name = "static_data"
