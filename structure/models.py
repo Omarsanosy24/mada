@@ -49,7 +49,13 @@ class BlogsModel(models.Model):
     image = models.TextField(null=True, blank=True)
 
 
+class ClientKindModel(models.Model):
+    name_ar = models.CharField(max_length=100)
+    name_en = models.CharField(max_length=100)
+
+
 class OurClientsModel(models.Model):
+    kind = models.ForeignKey(ClientKindModel, on_delete=models.SET_NULL, related_name="clients", null=True)
     name_ar = models.CharField(max_length=100)
     name_en = models.CharField(max_length=100)
     location_ar = models.CharField(max_length=100)
