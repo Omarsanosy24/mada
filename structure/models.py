@@ -99,6 +99,7 @@ class ProductGeneratorSet(models.Model):
                                  on_delete=models.CASCADE, related_name="products", null=True, blank=True)
     brand = models.ForeignKey(BrandGeneratorSetModel,
                               on_delete=models.CASCADE, related_name="products", null=True, blank=True)
+    products = models.ManyToManyField(ProductModel, related_name="generators_sets", blank=True)
 
 
 class FireProductsModel(models.Model):

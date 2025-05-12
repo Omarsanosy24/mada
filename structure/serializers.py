@@ -82,6 +82,7 @@ class BrandGeneratorSetSer(serializers.ModelSerializer):
 class ProductGeneratorSetSer(serializers.ModelSerializer):
     category_info = CategoryGeneratorSer(read_only=True, source="category")
     brand_info = BrandGeneratorSetSer(read_only=True, source="brand")
+    products_info = ProductMiniSer(read_only=True, source="products", many=True)
 
     class Meta:
         model = ProductGeneratorSet
