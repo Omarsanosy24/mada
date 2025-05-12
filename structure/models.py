@@ -110,4 +110,16 @@ class FireProductsModel(models.Model):
     image = models.TextField(null=True, blank=True)
 
 
-
+class ContactUsModel(models.Model):
+    kind = models.CharField(max_length=100, default="contact")
+    product = models.ForeignKey(ProductModel, on_delete=models.CASCADE, related_name="contact_us", null=True,
+                                blank=True)
+    product_generator_set = models.ForeignKey(ProductGeneratorSet,
+                                              on_delete=models.CASCADE,
+                                              related_name="contact_us", null=True, blank=True)
+    product_fire = models.ForeignKey(FireProductsModel,
+                                     on_delete=models.CASCADE, related_name="contact_us", null=True, blank=True)
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=100)
+    message = models.TextField(null=True, blank=True)

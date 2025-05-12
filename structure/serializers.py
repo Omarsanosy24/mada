@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import ServicesModel, StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, OurClientsModel, \
     ProductModel, CapacityModel, CategoryGeneratorSet, ProductGeneratorSet, FireProductsModel, BrandGeneratorSetModel, \
-    BrandsModel
+    BrandsModel, ContactUsModel
 from main_.serializers import make_serializer_class
 
 ServicesSer = make_serializer_class(ServicesModel)
@@ -90,3 +90,21 @@ class ProductGeneratorSetSer(serializers.ModelSerializer):
 
 
 FireProductsSer = make_serializer_class(FireProductsModel)
+
+
+class ContactUsModelSer(serializers.ModelSerializer):
+    product_info = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = ContactUsModel
+        fields = "__all__"
+
+    def get_product_info(self, obj):
+        if obj.product:
+            return ProductSer(obj.product).data
+        elif obj.product_generator_set:
+            return ProductGeneratorSetSer(obj.product_generator_set).data
+        elif obj.product_fire:
+            return FireProductsSer(obj.product_fire).data
+
+        return None
