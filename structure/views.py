@@ -22,7 +22,7 @@ class StaticDataViewSet(ModelViewSetIndividual):
 
 
 class H_Vac_CategoryViewSet(ModelViewSetIndividual):
-    queryset = H_Vac_CategoryModel.objects.all()
+    queryset = H_Vac_CategoryModel.objects.all().order_by("-id")
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = H_Vac_CategorySer
     filter_backends = [DjangoFilterBackend]
@@ -64,7 +64,7 @@ class ProductFilter(django_filters.FilterSet):
 
 
 class ProductView(ModelViewSetIndividual):
-    queryset = ProductModel.objects.all()
+    queryset = ProductModel.objects.select_related("brand", "capacity").all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = ProductSer
     filter_backends = [DjangoFilterBackend]
@@ -99,7 +99,7 @@ class ProductGeneratorSetFilter(django_filters.FilterSet):
 
 
 class ProductGeneratorSetViewSet(ModelViewSetIndividual):
-    queryset = ProductGeneratorSet.objects.all()
+    queryset = ProductGeneratorSet.objects.select_related("brand", "category").all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = ProductGeneratorSetSer
     filter_backends = [DjangoFilterBackend]
