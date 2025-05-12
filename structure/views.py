@@ -9,10 +9,10 @@ from django_filters.rest_framework import DjangoFilterBackend
 from main_.viewset import ModelViewSetIndividual
 from .models import StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, OurClientsModel, ProductModel, \
     CapacityModel, ProductGeneratorSet, CategoryGeneratorSet, FireProductsModel, BrandsModel, BrandGeneratorSetModel, \
-    ContactUsModel
+    ContactUsModel, ContactKindModel
 from .serializers import StaticDataSer, H_Vac_CategorySer, BannersSer, BlogsSer, OurClientsSer, ProductSer, \
     CapacitySer, ProductGeneratorSetSer, CategoryGeneratorSer, FireProductsSer, BrandsSer, BrandGeneratorSetSer, \
-    ContactUsModelSer
+    ContactUsModelSer, ContactKindModelSer
 
 
 class StaticDataViewSet(ModelViewSetIndividual):
@@ -138,3 +138,10 @@ class ContactUsModelViewSet(ModelViewSetIndividual):
     serializer_class = ContactUsModelSer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["kind"]
+
+
+class ContactKindModelViewSet(ModelViewSetIndividual):
+    queryset = ContactKindModel.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    serializer_class = ContactKindModelSer
+    lookup_field = "kind"

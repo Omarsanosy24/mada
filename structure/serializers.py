@@ -90,6 +90,7 @@ class ProductGeneratorSetSer(serializers.ModelSerializer):
 
 
 FireProductsSer = make_serializer_class(FireProductsModel)
+ContactKindModelSer = make_serializer_class(ContactUsModel)
 
 
 class ContactUsModelSer(serializers.ModelSerializer):
