@@ -22,7 +22,7 @@ class StaticDataViewSet(ModelViewSetIndividual):
 
 
 class H_Vac_CategoryViewSet(ModelViewSetIndividual):
-    queryset = H_Vac_CategoryModel.objects.all().order_by("-id")
+    queryset = H_Vac_CategoryModel.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = H_Vac_CategorySer
     filter_backends = [DjangoFilterBackend]
