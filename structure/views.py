@@ -1,5 +1,5 @@
 import django_filters
-from django_filters import OrderingFilter
+from rest_framework.filters import OrderingFilter
 
 from main_.permissions import HasAPIKeyWithTimeCheck
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
