@@ -152,4 +152,3 @@ class ClientKindModelViewSet(ModelViewSetIndividual):
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = ClientKindSer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["kind"]
