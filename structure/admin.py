@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import StaticData, ServicesModel, ProductModel, CapacityModel, BrandsModel, BlogsModel, BannersModel, \
-    OurClientsModel, H_Vac_CategoryModel, ProductGeneratorSet, CategoryGeneratorSet
+    OurClientsModel, H_Vac_CategoryModel, ProductGeneratorSet, CategoryGeneratorSet, ContactKindModel
 
 
 # Register your models here.
@@ -58,4 +58,9 @@ class ProductGeneratorSetAdmin(admin.ModelAdmin):
 
 @admin.register(CategoryGeneratorSet)
 class CategoryGeneratorSetAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(ContactKindModel)
+class ContactKindModelAdmin(admin.ModelAdmin):
     pass
