@@ -12,7 +12,7 @@ from .models import StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, O
     ContactUsModel, ContactKindModel, ClientKindModel
 from .serializers import StaticDataSer, H_Vac_CategorySer, BannersSer, BlogsSer, OurClientsSer, ProductSer, \
     CapacitySer, ProductGeneratorSetSer, CategoryGeneratorSer, FireProductsSer, BrandsSer, BrandGeneratorSetSer, \
-    ContactUsModelSer, ContactKindModelSer, ClientKindSer
+    ContactUsModelSer, ContactKindModelSer, ClientKindSer, ClintKindDetailsSer
 
 
 class StaticDataViewSet(ModelViewSetIndividual):
@@ -152,3 +152,8 @@ class ClientKindModelViewSet(ModelViewSetIndividual):
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = ClientKindSer
     filter_backends = [DjangoFilterBackend]
+
+    def get_serializer_class(self):
+        if "client" in self.request.query_params:
+            return ClintKindDetailsSer
+        return super().get_serializer_class()

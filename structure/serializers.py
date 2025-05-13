@@ -110,3 +110,11 @@ class ContactUsModelSer(serializers.ModelSerializer):
             return FireProductsSer(obj.product_fire).data
 
         return None
+
+
+class ClintKindDetailsSer(serializers.ModelSerializer):
+    clients = OurClientsSer(many=True, read_only=True)
+
+    class Meta:
+        model = ClientKindModel
+        fields = "__all__"
