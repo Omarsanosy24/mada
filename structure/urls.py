@@ -2,7 +2,8 @@ from rest_framework.routers import DefaultRouter
 from django.urls import path, include
 from .views import StaticDataViewSet, BannersView, BlogsView, ProductView, H_Vac_CategoryViewSet, OurClientsView, \
     CapacityView, ProductGeneratorSetViewSet, CategoryGeneratorViewSet, FireProductsViewSet, BrandsViewSet, \
-    BrandGeneratorSetViewSet, ContactUsModelViewSet, ContactKindModelViewSet, ClientKindModelViewSet
+    BrandGeneratorSetViewSet, ContactUsModelViewSet, ContactKindModelViewSet, ClientKindModelViewSet, \
+    NumOfPageForAllProductsView
 
 router = DefaultRouter()
 router.register("static-data", StaticDataViewSet)
@@ -25,4 +26,5 @@ router.register("contact-kind", ContactKindModelViewSet)
 app_name = "static_data"
 urlpatterns = [
     path('', include(router.urls)),
+    path('num-of-page/', NumOfPageForAllProductsView.as_view(), name="num-of-page"),
 ]

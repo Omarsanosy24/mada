@@ -1,8 +1,10 @@
 import django_filters
+from rest_framework import generics
 from rest_framework.filters import OrderingFilter
+from rest_framework.response import Response
 
 from main_.permissions import HasAPIKeyWithTimeCheck
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
@@ -178,3 +180,22 @@ class ClientKindModelViewSet(ModelViewSetIndividual):
         if "client" in self.request.query_params:
             return ClintKindDetailsSer
         return super().get_serializer_class()
+
+
+class NumOfPageForAllProductsView(generics.GenericAPIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        import math
+        try:
+            limit = int(request.query_params.get("page_limit", 10))
+        except ValueError:
+            limit = 10
+        return Response(
+            {
+                "blogs": math.ceil(BlogsModel.objects.count() / limit) + 1,
+                "product": math.ceil(ProductModel.objects.count() / limit) + 1,
+                "product_generator_set": math.ceil(ProductGeneratorSet.objects.count() / limit) + 1,
+                "product_fire": math.ceil(FireProductsModel.objects.count() / limit) + 1,
+            }
+        )
