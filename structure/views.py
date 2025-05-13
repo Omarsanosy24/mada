@@ -137,7 +137,7 @@ class ContactUsModelViewSet(ModelViewSetIndividual):
     permission_classes = [HasAPIKeyWithTimeCheck]
     serializer_class = ContactUsModelSer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["kind"]
+    filterset_fields = ["kind__kind"]
 
 
 class ContactKindModelViewSet(ModelViewSetIndividual):
