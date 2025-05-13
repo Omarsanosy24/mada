@@ -95,6 +95,10 @@ ContactKindModelSer = make_serializer_class(ContactKindModel)
 
 
 class ContactUsModelSer(serializers.ModelSerializer):
+    kind = serializers.PrimaryKeyRelatedField(
+        queryset=ContactKindModel.objects.all(),
+        pk_field="kind",
+    )
     product_info = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
