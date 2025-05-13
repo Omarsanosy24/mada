@@ -95,9 +95,9 @@ ContactKindModelSer = make_serializer_class(ContactKindModel)
 
 
 class ContactUsModelSer(serializers.ModelSerializer):
-    kind = serializers.PrimaryKeyRelatedField(
+    kind = serializers.SlugRelatedField(
         queryset=ContactKindModel.objects.all(),
-        pk_field="kind",
+        slug_field='name'  # الحقل اللي هتشتغل عليه (الـ Name)
     )
     product_info = serializers.SerializerMethodField(read_only=True)
 
