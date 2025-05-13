@@ -134,7 +134,7 @@ class BrandsViewSet(ModelViewSetIndividual):
 
 class ContactUsModelViewSet(ModelViewSetIndividual):
     queryset = ContactUsModel.objects.all()
-    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    permission_classes = [HasAPIKeyWithTimeCheck]
     serializer_class = ContactUsModelSer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["kind"]
@@ -149,7 +149,7 @@ class ContactKindModelViewSet(ModelViewSetIndividual):
 
 class ClientKindModelViewSet(ModelViewSetIndividual):
     queryset = ClientKindModel.objects.all()
-    permission_classes = [HasAPIKeyWithTimeCheck]
+    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = ClientKindSer
     filter_backends = [DjangoFilterBackend]
 
