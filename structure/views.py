@@ -12,7 +12,8 @@ from .models import StaticData, H_Vac_CategoryModel, BannersModel, BlogsModel, O
     ContactUsModel, ContactKindModel, ClientKindModel
 from .serializers import StaticDataSer, H_Vac_CategorySer, BannersSer, BlogsSer, OurClientsSer, ProductSer, \
     CapacitySer, ProductGeneratorSetSer, CategoryGeneratorSer, FireProductsSer, BrandsSer, BrandGeneratorSetSer, \
-    ContactUsModelSer, ContactKindModelSer, ClientKindSer, ClintKindDetailsSer
+    ContactUsModelSer, ContactKindModelSer, ClientKindSer, ClintKindDetailsSer, ProductGeneratorMiniSetSer, \
+    FireProductsMiniSer, BlogsMiniSer, ProductMiniSer
 
 
 class StaticDataViewSet(ModelViewSetIndividual):
@@ -47,6 +48,11 @@ class BlogsView(ModelViewSetIndividual):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["kind"]
 
+    def get_serializer_class(self):
+        if "mini" in self.request.query_params:
+            return BlogsMiniSer
+        return super().get_serializer_class()
+
 
 class OurClientsView(ModelViewSetIndividual):
     queryset = OurClientsModel.objects.all()
@@ -74,6 +80,11 @@ class ProductView(ModelViewSetIndividual):
     serializer_class = ProductSer
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductFilter
+
+    def get_serializer_class(self):
+        if "mini" in self.request.query_params:
+            return ProductMiniSer
+        return super().get_serializer_class()
 
 
 class CapacityView(ModelViewSetIndividual):
@@ -110,12 +121,22 @@ class ProductGeneratorSetViewSet(ModelViewSetIndividual):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ProductGeneratorSetFilter
 
+    def get_serializer_class(self):
+        if "mini" in self.request.query_params:
+            return ProductGeneratorMiniSetSer
+        return super().get_serializer_class()
+
 
 class FireProductsViewSet(ModelViewSetIndividual):
     queryset = FireProductsModel.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
     serializer_class = FireProductsSer
     filter_backends = [DjangoFilterBackend]
+
+    def get_serializer_class(self):
+        if "mini" in self.request.query_params:
+            return FireProductsMiniSer
+        return super().get_serializer_class()
 
 
 class BrandGeneratorSetViewSet(ModelViewSetIndividual):

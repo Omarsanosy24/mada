@@ -89,8 +89,10 @@ class ProductGeneratorSetSer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+ProductGeneratorMiniSetSer = make_serializer_class(ProductGeneratorSet, "id", "name_ar", "name_en")
 ClientKindSer = make_serializer_class(ClientKindModel)
 FireProductsSer = make_serializer_class(FireProductsModel)
+FireProductsMiniSer = make_serializer_class(FireProductsModel, "id", "name_ar", "name_en")
 ContactKindModelSer = make_serializer_class(ContactKindModel)
 
 
