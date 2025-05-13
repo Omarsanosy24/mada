@@ -149,7 +149,7 @@ class ContactKindModelViewSet(ModelViewSetIndividual):
 
 class ClientKindModelViewSet(ModelViewSetIndividual):
     queryset = ClientKindModel.objects.all()
-    permission_classes = [IsAuthenticatedOrReadOnly, HasAPIKeyWithTimeCheck]
+    permission_classes = [HasAPIKeyWithTimeCheck]
     serializer_class = ClientKindSer
     filter_backends = [DjangoFilterBackend]
 
